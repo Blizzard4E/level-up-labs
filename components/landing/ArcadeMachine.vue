@@ -86,10 +86,12 @@ function updateModelRotation() {
 onMounted(() => {
 	// Initial rotation based on current mouse position
 	updateModelRotation();
-	screenMaterial.map = videoTexture;
-	const videoElement = videoTexture.image as HTMLVideoElement;
-	videoElement.currentTime = 0;
-	videoElement.play();
+	setTimeout(() => {
+		screenMaterial.map = videoTexture;
+		const videoElement = videoTexture.image as HTMLVideoElement;
+		videoElement.currentTime = 0;
+		videoElement.play();
+	}, 3000);
 });
 
 // Watch for mouse position changes and update rotation
