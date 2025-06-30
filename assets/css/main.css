@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+	--color-pink: #ff4466;
+	--color-blue: #00ccff;
+}
+
+.plus-pattern {
+	background-image: url(/images/plus_icon.svg);
+	background-repeat: repeat;
+}
+.landing-gradient {
+	background: linear-gradient(
+		90deg,
+		rgba(0, 0, 0, 0.8) 20%,
+		rgba(255, 255, 255, 0) 50%,
+		rgba(0, 0, 0, 0.8) 80%
+	);
+}
+* {
+	font-family: Jost, sans-serif;
+}
