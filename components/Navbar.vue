@@ -1,9 +1,9 @@
 <template>
-	<nav class="fixed z-10 px-16 py-4 flex justify-between items-center w-full">
-		<div class="flex gap-4 items-center">
+	<nav class="fixed z-40 px-16 py-4 flex justify-between items-center w-full">
+		<NuxtLink href="/" class="flex gap-4 items-center cursor-pointer">
 			<img src="/images/logo_icon.svg" class="w-[60px]" />
 			<h1 class="text-2xl font-bold text-white">KON KHMER GAMES</h1>
-		</div>
+		</NuxtLink>
 		<div class="text-white flex gap-8 text-xl">
 			<NuxtLink
 				v-for="item in navItems"

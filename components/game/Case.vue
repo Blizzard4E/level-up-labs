@@ -40,6 +40,12 @@ const currentSelectedIndex = ref<number>(
 const isFollowingCursor = ref<boolean>(false);
 const selectedGameCaseModel = ref<Scene | null>(null);
 
+// Smooth transition variables
+const isTransitioningToMouse = ref<boolean>(false);
+const transitionStartTime = ref<number>(0);
+const transitionDuration = 800; // Duration for smooth transition to mouse following
+const transitionStartRotation = ref<{ x: number; y: number }>({ x: 0, y: 0 });
+
 // Define default/base rotations for cursor following
 const defaultRotationX = 0; // 0 degrees in radians
 const defaultRotationY = 0; // 0 degrees in radians
@@ -166,11 +172,9 @@ function animateObjectTo(
 	animate();
 }
 
-function updateSelectedGameCaseRotation() {
-	if (!isFollowingCursor.value || !selectedGameCaseModel.value) return;
-
-	const rotationRangeX = (60 * Math.PI) / 180; // 25 degrees in radians
-	const rotationRangeY = (110 * Math.PI) / 180; // 50 degrees in radians
+function calculateMouseRotation() {
+	const rotationRangeX = (40 * Math.PI) / 180;
+	const rotationRangeY = (100 * Math.PI) / 180;
 	const mouseXRatio = props.mouseX / window.innerWidth - 0.5;
 	const mouseYRatio = props.mouseY / window.innerHeight - 0.5;
 	const mouseRotationX = -mouseYRatio * rotationRangeX;
@@ -180,20 +184,85 @@ function updateSelectedGameCaseRotation() {
 	const finalRotationX = defaultRotationX + mouseRotationX;
 	const finalRotationY = defaultRotationY + mouseRotationY;
 
-	// Apply rotations with constraints
-	selectedGameCaseModel.value.rotation.x = Math.max(
+	// Apply constraints
+	const constrainedRotationX = Math.max(
 		defaultRotationX - rotationRangeX,
 		Math.min(defaultRotationX + rotationRangeX, finalRotationX)
 	);
-	selectedGameCaseModel.value.rotation.y = Math.max(
+	const constrainedRotationY = Math.max(
 		defaultRotationY - rotationRangeY,
 		Math.min(defaultRotationY + rotationRangeY, finalRotationY)
 	);
+
+	return {
+		x: constrainedRotationX,
+		y: constrainedRotationY,
+	};
+}
+
+function updateSelectedGameCaseRotation() {
+	if (!selectedGameCaseModel.value) return;
+
+	const targetRotation = calculateMouseRotation();
+
+	if (isTransitioningToMouse.value) {
+		// During transition phase - interpolate from start rotation to mouse rotation
+		const elapsed = Date.now() - transitionStartTime.value;
+		const progress = Math.min(elapsed / transitionDuration, 1);
+
+		// Easing function (ease-out cubic for smooth deceleration)
+		const easedProgress = 1 - Math.pow(1 - progress, 3);
+
+		selectedGameCaseModel.value.rotation.x =
+			transitionStartRotation.value.x +
+			(targetRotation.x - transitionStartRotation.value.x) *
+				easedProgress;
+		selectedGameCaseModel.value.rotation.y =
+			transitionStartRotation.value.y +
+			(targetRotation.y - transitionStartRotation.value.y) *
+				easedProgress;
+
+		// Check if transition is complete
+		if (progress >= 1) {
+			isTransitioningToMouse.value = false;
+		}
+	} else if (isFollowingCursor.value) {
+		// Normal cursor following - direct update
+		selectedGameCaseModel.value.rotation.x = targetRotation.x;
+		selectedGameCaseModel.value.rotation.y = targetRotation.y;
+	}
+}
+
+function startMouseFollowing() {
+	if (!selectedGameCaseModel.value) return;
+
+	// Store the current rotation as the starting point for transition
+	transitionStartRotation.value = {
+		x: selectedGameCaseModel.value.rotation.x,
+		y: selectedGameCaseModel.value.rotation.y,
+	};
+
+	// Start the transition
+	isTransitioningToMouse.value = true;
+	transitionStartTime.value = Date.now();
+	isFollowingCursor.value = true;
+
+	// Start the animation loop for smooth transition
+	function animateTransition() {
+		updateSelectedGameCaseRotation();
+
+		if (isTransitioningToMouse.value) {
+			requestAnimationFrame(animateTransition);
+		}
+	}
+
+	animateTransition();
 }
 
 function selectGameCase(gameCaseIndex: number) {
 	// Stop cursor following for the previous selection
 	isFollowingCursor.value = false;
+	isTransitioningToMouse.value = false;
 	selectedGameCaseModel.value = null;
 
 	// Reset previously selected case to original position/rotation
@@ -268,57 +337,38 @@ function selectGameCase(gameCaseIndex: number) {
 				300 // Quick move forward
 			);
 
-			// Step 2: After moving forward, do a 360-degree spin
+			// Step 2: After moving forward, do a 360-degree spin and end up at the final position
 			setTimeout(() => {
 				const currentRotationY = selectedGameCase.model!.rotation.y;
 				animateObjectTo(
 					selectedGameCase.model!,
 					{
 						position: {
-							x: selectedGameCase.model!.position.x,
-							y: selectedGameCase.model!.position.y,
-							z: selectedGameCase.model!.position.z,
-						},
-						rotation: {
-							x: selectedGameCase.model!.rotation.x,
-							y:
-								currentRotationY +
-								(Math.PI * 2 - (50 * Math.PI) / 180), // 360 - 50 degrees
-							z: selectedGameCase.model!.rotation.z,
-						},
-					},
-					600, // Spin duration
-					true // Allow full rotation
-				);
-			}, 300); // Wait for forward movement to complete
-
-			// Step 3: After the spin, move to final selected position and start cursor following
-			setTimeout(() => {
-				animateObjectTo(
-					selectedGameCase.model!,
-					{
-						position: {
-							x: selectedCaseOriginalX, // Keep original relative position
+							x: selectedCaseOriginalX, // Move to final position during spin
 							y: 0.2,
 							z: 2.9,
 						},
 						rotation: {
-							x: defaultRotationX, // Set to default rotation for cursor following
-							y: defaultRotationY,
+							x: defaultRotationX, // End at default rotation for mouse following
+							y: defaultRotationY + Math.PI * 2, // 360-degree spin ending at default
 							z: 0,
 						},
 					},
-					400,
-					false,
-					() => {
-						// Animation complete callback - start cursor following
-						selectedGameCaseModel.value = selectedGameCase.model!;
-						isFollowingCursor.value = true;
-						// Initial rotation update based on current mouse position
-						updateSelectedGameCaseRotation();
-					}
+					800, // Spin duration
+					true // Allow full rotation
 				);
-			}, 900); // Wait for forward movement + spin to complete (300 + 600)
+			}, 300); // Wait for forward movement to complete
+
+			// Step 3: After the spin, start cursor following immediately
+			setTimeout(() => {
+				// Set the model reference and start smooth cursor following
+				selectedGameCaseModel.value = selectedGameCase.model!;
+
+				// Normalize the Y rotation to defaultRotationY to avoid extra spinning
+				selectedGameCase.model!.rotation.y = defaultRotationY;
+
+				startMouseFollowing();
+			}, 1100); // Wait for forward movement + spin to complete (300 + 800)
 		}
 	}
 
