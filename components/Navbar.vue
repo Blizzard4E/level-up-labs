@@ -14,7 +14,7 @@
 					(route.path === '/' && item.to === '/')
 						? 'text-pink'
 						: '',
-					'hover:text-pink duration-300 ease-in-out',
+					'hover:text-pink duration-300 ease-in-out shadow',
 				]"
 			>
 				{{ item.label }}

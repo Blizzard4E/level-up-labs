@@ -145,6 +145,7 @@
 				</div>
 			</div>
 		</div>
+
 		<TresCanvas window-size alpha class="">
 			<TresPerspectiveCamera
 				:args="[80, 1, 0.1, 1000]"
