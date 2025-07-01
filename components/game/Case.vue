@@ -173,12 +173,12 @@ function animateObjectTo(
 }
 
 function calculateMouseRotation() {
-	const rotationRangeX = (40 * Math.PI) / 180;
+	const rotationRangeX = (60 * Math.PI) / 180;
 	const rotationRangeY = (100 * Math.PI) / 180;
 	const mouseXRatio = props.mouseX / window.innerWidth - 0.5;
 	const mouseYRatio = props.mouseY / window.innerHeight - 0.5;
-	const mouseRotationX = -mouseYRatio * rotationRangeX;
-	const mouseRotationY = -mouseXRatio * rotationRangeY;
+	const mouseRotationX = mouseYRatio * rotationRangeX;
+	const mouseRotationY = mouseXRatio * rotationRangeY;
 
 	// Combine default rotation with mouse-influenced rotation
 	const finalRotationX = defaultRotationX + mouseRotationX;

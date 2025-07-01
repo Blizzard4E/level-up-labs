@@ -100,6 +100,7 @@
 					<p class="text-xl">
 						{{ gameCases[selectedGameCase].desc }}
 					</p>
+
 					<h2 class="text-xl font-bold mt-6 uppercase">
 						PUBLISHED BY
 					</h2>
@@ -111,7 +112,16 @@
 					>
 						{{ publisher.name }}
 					</p>
-					<div class="mt-16"><GameDownload /></div>
+					<h2 class="text-xl font-bold uppercase mt-6">
+						{{ gameCases[selectedGameCase].releasedDate }}
+					</h2>
+					<div class="mt-16">
+						<NuxtLink
+							target="_blank"
+							:href="gameCases[selectedGameCase].downloadUrl"
+							><GameDownload
+						/></NuxtLink>
+					</div>
 				</div>
 			</div>
 			<div
@@ -196,6 +206,8 @@ const gameCases: Game[] = [
 		],
 		publishers: [{ id: "pub1", name: "Skyline Studios" }],
 		gameplays: [gameplayUrl, gameplayUrl],
+		releasedDate: "15 January 2023",
+		downloadUrl: "https://example.com/neon-skies",
 	},
 	{
 		id: "case2",
@@ -209,6 +221,8 @@ const gameCases: Game[] = [
 		],
 		publishers: [{ id: "pub2", name: "Ancient Games" }],
 		gameplays: [gameplayUrl, gameplayUrl],
+		releasedDate: "3 March 2022",
+		downloadUrl: "https://example.com/dungeon-delver",
 	},
 	{
 		id: "case3",
@@ -222,6 +236,8 @@ const gameCases: Game[] = [
 		],
 		publishers: [{ id: "pub3", name: "Pixel Forge" }],
 		gameplays: [gameplayUrl, gameplayUrl],
+		releasedDate: "22 July 2021",
+		downloadUrl: "https://example.com/pixel-pioneers",
 	},
 	{
 		id: "case4",
@@ -235,6 +251,8 @@ const gameCases: Game[] = [
 		],
 		publishers: [{ id: "pub4", name: "Stellar Interactive" }],
 		gameplays: [gameplayUrl, gameplayUrl],
+		releasedDate: "11 October 2022",
+		downloadUrl: "https://example.com/galactic-outlaws",
 	},
 	{
 		id: "case5",
@@ -248,6 +266,8 @@ const gameCases: Game[] = [
 		],
 		publishers: [{ id: "pub5", name: "Enchanted Games" }],
 		gameplays: [gameplayUrl, gameplayUrl],
+		releasedDate: "7 May 2023",
+		downloadUrl: "https://example.com/mystic-grove",
 	},
 	{
 		id: "case6",
@@ -261,6 +281,8 @@ const gameCases: Game[] = [
 		],
 		publishers: [{ id: "pub6", name: "Neon Defense" }],
 		gameplays: [gameplayUrl, gameplayUrl],
+		releasedDate: "19 August 2021",
+		downloadUrl: "https://example.com/cyber-siege",
 	},
 	{
 		id: "case7",
@@ -274,6 +296,8 @@ const gameCases: Game[] = [
 		],
 		publishers: [{ id: "pub7", name: "Shadow Games" }],
 		gameplays: [gameplayUrl, gameplayUrl],
+		releasedDate: "2 November 2022",
+		downloadUrl: "https://example.com/shadow-runner",
 	},
 	{
 		id: "case8",
@@ -287,6 +311,8 @@ const gameCases: Game[] = [
 		],
 		publishers: [{ id: "pub8", name: "Cloudworks Studios" }],
 		gameplays: [gameplayUrl, gameplayUrl],
+		releasedDate: "7 February 2024",
+		downloadUrl: "https://example.com/skybound-armada",
 	},
 	{
 		id: "case9",
@@ -300,6 +326,8 @@ const gameCases: Game[] = [
 		],
 		publishers: [{ id: "pub9", name: "Temporal Studios" }],
 		gameplays: [gameplayUrl, gameplayUrl],
+		releasedDate: "13 June 2023",
+		downloadUrl: "https://example.com/echoes-of-time",
 	},
 	{
 		id: "case10",
@@ -313,6 +341,8 @@ const gameCases: Game[] = [
 		],
 		publishers: [{ id: "pub10", name: "Icebound Games" }],
 		gameplays: [gameplayUrl, gameplayUrl],
+		releasedDate: "28 December 2021",
+		downloadUrl: "https://example.com/frostbite-frontier",
 	},
 	{
 		id: "case11",
@@ -326,6 +356,8 @@ const gameCases: Game[] = [
 		],
 		publishers: [{ id: "pub11", name: "Quantum Leap Studios" }],
 		gameplays: [gameplayUrl, gameplayUrl],
+		releasedDate: "4 April 2022",
+		downloadUrl: "https://example.com/quantum-quest",
 	},
 	{
 		id: "case12",
@@ -339,6 +371,8 @@ const gameCases: Game[] = [
 		],
 		publishers: [{ id: "pub12", name: "Circuit Games" }],
 		gameplays: [gameplayUrl, gameplayUrl],
+		releasedDate: "7 March 2025",
+		downloadUrl: "https://example.com/rogue-circuit",
 	},
 ];
 

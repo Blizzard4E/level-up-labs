@@ -15,4 +15,6 @@ export type Game = {
 	genres: Genre[];
 	publishers: Publisher[];
 	gameplays: string[];
+	releasedDate: string;
+	downloadUrl: string;
 };
