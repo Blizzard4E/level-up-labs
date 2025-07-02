@@ -22,9 +22,9 @@
 			<div class="w-[40vw] text-white text-2xl flex-col">
 				<p class="text-white text-2xl">
 					Kon Khmer Games is an independent game development studio
-					founded and operated by Khmer developers. Established in
-					2024, we have been operating for 1 year as of 2025. We
-					create engaging interactive experiences and innovative
+					founded and operated by Khmer developers. Established in 23
+					February 2024, we have been operating for 1 year as of 2025.
+					We create engaging interactive experiences and innovative
 					gameplay that entertains players worldwide, bringing fresh
 					perspectives and creativity to the gaming industry.
 				</p>
