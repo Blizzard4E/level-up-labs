@@ -32,6 +32,6 @@ const navItems = [
 	{ to: "/", label: "Home" },
 	{ to: "/games", label: "Achievements" },
 	{ to: "/about", label: "About Us" },
-	{ to: "/side-quests", label: "Side Quests" },
+	{ to: "/side-quests", label: "Trip Reports" },
 ];
 </script>
