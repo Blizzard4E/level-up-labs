@@ -30,7 +30,7 @@ const route = useRoute();
 
 const navItems = [
 	{ to: "/", label: "Home" },
-	{ to: "/games", label: "Games" },
+	{ to: "/games", label: "Achievements" },
 	{ to: "/about", label: "About Us" },
 	{ to: "/side-quests", label: "Side Quests" },
 ];
