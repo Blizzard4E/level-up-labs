@@ -1,7 +1,7 @@
 <template>
 	<div @mousemove="handleMouseMove">
 		<div class="w-screen h-screen relative overflow-hidden">
-			<div class="absolute top-0 left-0 z-0 animation-shaky select-none">
+			<div class="fixed top-0 left-0 z-0 animation-shaky select-none">
 				<img
 					src="https://res.cloudinary.com/duzvevuup/image/upload/v1751240816/Game%20Design%20Showcase%20Website/jinx_rl3ggw.webp"
 					class="relative min-w-screen min-h-screen w-screen h-screen object-cover scale-105"
@@ -9,23 +9,26 @@
 				/>
 			</div>
 			<div
-				class="plus-pattern absolute top-0 left-0 z-0 min-w-screen min-h-screen w-screen h-screen"
+				class="plus-pattern fixed top-0 left-0 z-0 min-w-screen min-h-screen w-screen h-screen"
 			></div>
 			<div
-				class="landing-gradient absolute top-0 left-0 z-0 min-w-screen min-h-screen w-screen h-screen"
+				class="landing-gradient fixed top-0 left-0 z-0 min-w-screen min-h-screen w-screen h-screen"
 			></div>
 		</div>
-		<div class="absolute top-[50%] translate-y-[-50%] left-0 z-20 px-16">
-			<div>
-				<img src="/images/logo_text.svg" alt="" />
+		<div class="absolute top-0 mt-[40vh] left-0 z-20 px-16">
+			<h1 class="font-bold text-5xl text-pink mb-4">
+				"GAME <span class="text-blue">ON</span>"
+			</h1>
+			<div class="w-[40vw] text-white text-2xl flex-col">
+				<p class="text-white text-2xl">
+					Kon Khmer Games is an independent game development studio
+					founded and operated by Khmer developers. Established in
+					2024, we have been operating for 1 year as of 2025. We
+					create engaging interactive experiences and innovative
+					gameplay that entertains players worldwide, bringing fresh
+					perspectives and creativity to the gaming industry.
+				</p>
 			</div>
-			<p class="text-white text-2xl w-[40vw]">
-				Kon Khmer Games is an independent game development studio
-				founded and operated by Khmer developers. We create engaging
-				interactive experiences and innovative gameplay that entertains
-				players worldwide, bringing fresh perspectives and creativity to
-				the gaming industry.
-			</p>
 			<div class="mt-8">
 				<NuxtLink href="/games"><LandingButton /></NuxtLink>
 			</div>
